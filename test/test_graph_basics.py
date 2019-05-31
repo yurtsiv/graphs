@@ -130,3 +130,21 @@ class TestGraphBasics(unittest.TestCase):
       2: [(4, 0), (3, 0)],
       3: [(2, 0), (4, 0)]
     })
+
+  def test_update_node_direted(self):
+    graph = Graph(directed=True)
+    graph.add_node(1)
+    graph.add_node(2)
+    graph.add_node(3)
+
+    graph.add_edge(1,2)
+    graph.add_edge(2,1)
+    graph.add_edge(3, 1)
+
+    graph.update_node(1, 4)
+
+    self.assertEqual(graph.nodes, {
+      4: [(2, 0)],
+      2: [(4, 0)],
+      3: [(4, 0)],
+    })

@@ -76,12 +76,19 @@ class Graph:
     if updated_key in self.nodes:
       raise Exception("Can't update node to " + updated_key + " since such node already exists")
     
-    for edge in self.nodes[original_key]:
-      liked_node = edge[0]
-      self.nodes[liked_node] = list(map(
-        lambda edge: (updated_key, edge[1]) if edge[0] == original_key else edge,
-        self.nodes[liked_node]
-      ))
+    if self.directed:
+      for node in self.nodes:
+        self.nodes[node] = list(map(
+          lambda edge: (updated_key, edge[1]) if edge[0] == original_key else edge,
+          self.nodes[node]
+        ))
+    else:
+      for edge in self.nodes[original_key]:
+        liked_node = edge[0]
+        self.nodes[liked_node] = list(map(
+          lambda edge: (updated_key, edge[1]) if edge[0] == original_key else edge,
+          self.nodes[liked_node]
+        ))
 
     self.nodes[updated_key] = self.nodes[original_key]
-    del self.nodes[original_key]  
+    del self.nodes[original_key]
