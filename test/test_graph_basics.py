@@ -2,7 +2,7 @@ import unittest
 
 from graph.graph import Graph
 
-class TestGraphMethods(unittest.TestCase):
+class TestGraphBasics(unittest.TestCase):
   def test_add_node(self):
     graph = Graph()
     graph.add_node(1)
@@ -78,3 +78,19 @@ class TestGraphMethods(unittest.TestCase):
 
     self.assertRaises(Exception, Graph.remove_edge, 0, 1)
     self.assertRaises(Exception, Graph.remove_edge, 1, 5)
+  
+  def test_weight_update(self):
+    graph = Graph(weighted=True)
+    graph.add_node("Node 1")
+    graph.add_node("Node 2")
+
+    graph.add_edge("Node 1", "Node 2", 10)
+    
+    graph.update_weight("Node 1", "Node 2", 5)
+    self.assertEqual(graph.nodes, {
+      "Node 1": [("Node 2", 5)],
+      "Node 2": [("Node 1", 5)],
+    })
+
+    self.assertRaises(Exception, graph.update_weight, "Node 0", "Node 2", 5)
+    self.assertRaises(Exception, graph.update_weight, "Node 1", "Node 4", 5)
