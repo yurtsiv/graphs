@@ -61,7 +61,6 @@ class Graph:
     self.check_node_exists(key1)
     self.check_node_exists(key2)
     
-
     self.modify_single_edge(key1, key2, lambda x: (x[0], new_weight))
     if not self.directed:
       self.modify_single_edge(key2, key1, lambda x: (x[0], new_weight))
@@ -80,3 +79,22 @@ class Graph:
 
     self.nodes[updated_key] = self.nodes[original_key]
     del self.nodes[original_key]
+  
+  def print(self):
+    print("Directed: " + self.directed)
+    print("Weighted: " + self.directed)
+    print("Nodes:")
+    for node in self.nodes:
+      print(str(node) + " | ")
+
+    if self.weighted:
+      print("Edges (node, weight):")
+    else:
+      print("Edges:")
+    
+    for node in self.nodes:
+      for edge in self.nodes[node]:
+        if self.weighted:
+          print("(" + str(edge[0]) + ", " + str(edge[1]) + ") | ")
+        else:
+          print(str(edge[0]))

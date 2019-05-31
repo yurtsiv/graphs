@@ -131,6 +131,9 @@ class TestGraphBasics(unittest.TestCase):
       3: [(2, 0), (4, 0)]
     })
 
+    self.assertRaises(Exception, graph.update_node, 10, 12)
+    self.assertRaises(Exception, graph.update_node, 2, 3) 
+
   def test_update_node_direted(self):
     graph = Graph(directed=True)
     graph.add_node(1)
