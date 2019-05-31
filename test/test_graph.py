@@ -7,11 +7,11 @@ class TestGraphMethods(unittest.TestCase):
     graph = Graph()
     graph.add_node(1)
     graph.add_node(2)
-    graph.add_edge(1, 2)
 
-    self.assertEqual(len(graph.nodes), 2)
-    self.assertEqual(graph.nodes[0].key, 1)
-    self.assertEqual(graph.nodes[1].key, 2)
+    self.assertEqual(graph.nodes, {
+      1: [],
+      2: []
+    })
     self.assertRaises(Exception, Graph.add_node, 1)
 
   def test_add_edge_undirected(self):
@@ -20,8 +20,10 @@ class TestGraphMethods(unittest.TestCase):
     graph.add_node(2)
     graph.add_edge(1, 2)
 
-    self.assertEqual(graph.nodes[0].links[0][0].key, 2)
-    self.assertEqual(graph.nodes[1].links[0][0].key, 1)
+    self.assertEqual(graph.nodes, {
+      1: [(2, 0)],
+      2: [(1, 0)]
+    })
     self.assertRaises(Exception, Graph.add_edge, 0, 3)
   
   def test_add_edge_directed(self):
@@ -30,5 +32,7 @@ class TestGraphMethods(unittest.TestCase):
     graph.add_node(2)
     graph.add_edge(1, 2)
 
-    self.assertEqual(graph.nodes[0].links[0][0].key, 2)
-    self.assertEqual(graph.nodes[1].links, [])
+    self.assertEqual(graph.nodes, {
+      1: [(2, 0)],
+      2: []
+    })
