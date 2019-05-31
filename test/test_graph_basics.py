@@ -151,3 +151,27 @@ class TestGraphBasics(unittest.TestCase):
       2: [(4, 0)],
       3: [(4, 0)],
     })
+
+  def test_get_node_degree_undirected(self):
+    graph = Graph()
+    graph.add_node(1)
+    graph.add_node(2)
+    graph.add_node(3)
+
+    graph.add_edge(1, 2)
+    graph.add_edge(1, 3)
+    graph.add_edge(3, 2)
+
+    self.assertEqual(graph.get_node_degree(1), 2)
+
+  def test_get_node_degree_directed(self):
+    graph = Graph(directed=True)
+    graph.add_node(1)
+    graph.add_node(2)
+    graph.add_node(3)
+
+    graph.add_edge(1, 2)
+    graph.add_edge(2, 1)
+    graph.add_edge(3, 1)
+
+    self.assertEqual(graph.get_node_degree(1), 3)

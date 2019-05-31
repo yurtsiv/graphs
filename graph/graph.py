@@ -80,6 +80,20 @@ class Graph:
     self.nodes[updated_key] = self.nodes[original_key]
     del self.nodes[original_key]
   
+  def get_node_degree(self, key):
+    self.check_node_exists(key)
+    if not self.directed:
+      return len(self.nodes[key])
+
+    degree = len(self.nodes[key])
+    for node in self.nodes:
+      for edge in self.nodes[node]:
+        if edge[0] == key:
+          degree += 1
+
+    return degree
+
+  
   def print(self):
     print("Directed: " + self.directed)
     print("Weighted: " + self.directed)
