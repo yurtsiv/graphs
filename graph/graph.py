@@ -93,7 +93,6 @@ class Graph:
 
     return degree
 
-  
   def print(self):
     print("Directed: " + self.directed)
     print("Weighted: " + self.directed)
@@ -112,3 +111,7 @@ class Graph:
           print("(" + str(edge[0]) + ", " + str(edge[1]) + ") | ")
         else:
           print(str(edge[0]))
+
+  def print_neighbours(self, key):
+    self.check_node_exists(key)
+    print(str(self.nodes[key]))
