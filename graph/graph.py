@@ -22,15 +22,21 @@ class Graph:
   def remove_node(self, key):
     if not key in self.nodes:
       self.raise_no_node_exception(key) 
-    
-    for edge in self.nodes[key]:
-      liked_node = edge[0]
-      self.nodes[liked_node] = list(
-        edge for edge in self.nodes[liked_node] if edge[0] != key
-      )
-    
+
+    if self.directed:
+      for node in self.nodes:
+        self.nodes[node] = list(
+          edge for edge in self.nodes[node] if edge[0] != key
+        )
+    else:
+      for edge in self.nodes[key]:
+        liked_node = edge[0]
+        self.nodes[liked_node] = list(
+          edge for edge in self.nodes[liked_node] if edge[0] != key
+        )
+
     del self.nodes[key]
-        
+
   def add_edge(self, key1, key2, weight=0):
     self.check_nodes_exist(key1, key2)
 

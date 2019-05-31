@@ -37,7 +37,7 @@ class TestGraphBasics(unittest.TestCase):
       2: []
     })
 
-  def test_remove_node(self):
+  def test_remove_node_directed(self):
     graph = Graph()
     graph.add_node(1)
     graph.add_node(2)
@@ -54,6 +54,24 @@ class TestGraphBasics(unittest.TestCase):
       3: [(2, 0)]
     })
   
+  def test_remove_node_undirected(self):
+    graph = Graph(directed=True)
+    graph.add_node(1)
+    graph.add_node(2)
+    graph.add_node(3)
+
+    graph.add_edge(1,2)
+    graph.add_edge(2,1)
+    graph.add_edge(2,3)
+    graph.add_edge(3, 1)
+
+    graph.remove_node(1)
+
+    self.assertEqual(graph.nodes, {
+      2: [(3,0)],
+      3: []
+    })
+
   def test_remove_edge(self):
     graph = Graph()
     graph.add_node(1)
