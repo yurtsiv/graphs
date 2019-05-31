@@ -112,3 +112,21 @@ class TestGraphBasics(unittest.TestCase):
 
     self.assertRaises(Exception, graph.update_weight, "Node 0", "Node 2", 5)
     self.assertRaises(Exception, graph.update_weight, "Node 1", "Node 4", 5)
+  
+  def test_update_node_undireted(self):
+    graph = Graph()
+    graph.add_node(1)
+    graph.add_node(2)
+    graph.add_node(3)
+
+    graph.add_edge(1,2)
+    graph.add_edge(2,3)
+    graph.add_edge(1,3)
+
+    graph.update_node(1, 4)
+
+    self.assertEqual(graph.nodes, {
+      4: [(2, 0), (3, 0)],
+      2: [(4, 0), (3, 0)],
+      3: [(2, 0), (4, 0)]
+    })
