@@ -1,3 +1,6 @@
+from .constants import MinSpanningTreeAlgs
+from .min_spanning_tree import kruskal_algorithm, prim_algorithm
+
 class Graph:
   def __init__(self, weighted = False, directed = False):
     self.nodes = {} 
@@ -92,6 +95,14 @@ class Graph:
           degree += 1
 
     return degree
+  
+  def get_min_spanning_tree(self, algorithm=MinSpanningTreeAlgs.Kruskal):
+    if self.directed:
+      raise Exception("Can't get minimum spanning tree for directed graph.")
+    if algorithm == MinSpanningTreeAlgs.Kruskal:
+      return kruskal_algorithm(self.nodes)
+    else:
+      return prim_algorithm(self.nodes)
 
   def print(self):
     print("Directed: " + self.directed)

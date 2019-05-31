@@ -103,7 +103,7 @@ class TestGraphBasics(unittest.TestCase):
     graph.add_node("Node 2")
 
     graph.add_edge("Node 1", "Node 2", 10)
-    
+ 
     graph.update_weight("Node 1", "Node 2", 5)
     self.assertEqual(graph.nodes, {
       "Node 1": [("Node 2", 5)],
