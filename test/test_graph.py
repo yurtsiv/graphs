@@ -53,3 +53,28 @@ class TestGraphMethods(unittest.TestCase):
       2: [(3,0)],
       3: [(2, 0)]
     })
+  
+  def test_remove_edge(self):
+    graph = Graph()
+    graph.add_node(1)
+    graph.add_node(2)
+    graph.add_node(3)
+
+    graph.add_edge(1,2)
+    graph.add_edge(2,3)
+    graph.add_edge(1,3)
+
+    graph.remove_edge(1, 3)
+    expected_val = {
+      1: [(2, 0)],
+      2: [(1, 0), (3,0)],
+      3: [(2, 0)]
+    }
+
+    self.assertEqual(graph.nodes, expected_val)
+
+    graph.remove_edge(1, 3)
+    self.assertEqual(graph.nodes, expected_val)
+
+    self.assertRaises(Exception, Graph.remove_edge, 0, 1)
+    self.assertRaises(Exception, Graph.remove_edge, 1, 5)

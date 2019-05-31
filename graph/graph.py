@@ -36,3 +36,16 @@ class Graph:
     else:
       self.nodes[key1].append((key2, weight))
       self.nodes[key2].append((key1, weight))
+
+  def remove_edge(self, key1, key2):
+    if not key1 in self.nodes:
+      self.raise_no_node_exception(key1)
+    if not key2 in self.nodes:
+      self.raise_no_node_exception(key2)
+
+    self.nodes[key1] = list(
+      edge for edge in self.nodes[key1] if edge[0] != key2
+    )
+    self.nodes[key2] = list(
+      edge for edge in self.nodes[key2] if edge[0] != key1
+    )
