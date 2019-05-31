@@ -13,23 +13,29 @@ class Graph:
       raise Exception("Node " + str(key) + " already exists")
 
     self.nodes[key] = []
+  
+  def remove_single_edge(self, node, neighbour):
+    self.nodes[node] = list(
+      edge for edge in self.nodes[node] if edge[0] != neighbour
+    )
+  
+  def modify_single_edge(self, node1, node2, modify_func):
+    self.nodes[node1] = list(map(
+      lambda edge: modify_func(edge) if edge[0] == node2 else edge,
+      self.nodes[node1]
+    ))
 
-  def remove_node(self, key):
-    self.check_node_exists(key)
+  def remove_node(self, node_to_remove):
+    self.check_node_exists(node_to_remove)
 
     if self.directed:
       for node in self.nodes:
-        self.nodes[node] = list(
-          edge for edge in self.nodes[node] if edge[0] != key
-        )
+        self.remove_single_edge(node, node_to_remove)
     else:
-      for edge in self.nodes[key]:
-        liked_node = edge[0]
-        self.nodes[liked_node] = list(
-          edge for edge in self.nodes[liked_node] if edge[0] != key
-        )
+      for edge in self.nodes[node_to_remove]:
+        self.remove_single_edge(edge[0], node_to_remove)
 
-    del self.nodes[key]
+    del self.nodes[node_to_remove]
 
   def add_edge(self, key1, key2, weight=0):
     self.check_node_exists(key1)
@@ -45,14 +51,9 @@ class Graph:
     self.check_node_exists(key1)
     self.check_node_exists(key2)
 
-    self.nodes[key1] = list(
-      edge for edge in self.nodes[key1] if edge[0] != key2
-    )
-
+    self.remove_single_edge(key1, key2)
     if not self.directed:
-      self.nodes[key2] = list(
-        edge for edge in self.nodes[key2] if edge[0] != key1
-      )
+      self.remove_single_edge(key2, key1)
   
   def update_weight(self, key1, key2, new_weight):
     if not self.weighted:
@@ -60,35 +61,22 @@ class Graph:
     self.check_node_exists(key1)
     self.check_node_exists(key2)
     
-    self.nodes[key1] = list(map(
-      lambda edge: (key2, new_weight) if edge[0] == key2 else edge,
-      self.nodes[key1]
-    ))
 
+    self.modify_single_edge(key1, key2, lambda x: (x[0], new_weight))
     if not self.directed:
-      self.nodes[key2] = list(map(
-        lambda edge: (key1, new_weight) if edge[0] == key1 else edge,
-        self.nodes[key2]
-      ))
+      self.modify_single_edge(key2, key1, lambda x: (x[0], new_weight))
   
   def update_node(self, original_key, updated_key):
     self.check_node_exists(original_key)
     if updated_key in self.nodes:
       raise Exception("Can't update node to " + updated_key + " since such node already exists")
-    
+
     if self.directed:
       for node in self.nodes:
-        self.nodes[node] = list(map(
-          lambda edge: (updated_key, edge[1]) if edge[0] == original_key else edge,
-          self.nodes[node]
-        ))
+        self.modify_single_edge(node, original_key, lambda x: (updated_key, x[1]))
     else:
       for edge in self.nodes[original_key]:
-        liked_node = edge[0]
-        self.nodes[liked_node] = list(map(
-          lambda edge: (updated_key, edge[1]) if edge[0] == original_key else edge,
-          self.nodes[liked_node]
-        ))
+        self.modify_single_edge(edge[0], original_key, lambda x: (updated_key, x[1]))
 
     self.nodes[updated_key] = self.nodes[original_key]
     del self.nodes[original_key]
