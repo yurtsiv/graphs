@@ -1,13 +1,5 @@
 from queue import PriorityQueue
-
-def convert_to_set_of_edges(nodes):
-  result = []
-  for node in nodes:
-    for edge in nodes[node]:
-      result.append((node, edge[0], edge[1]))
-
-  result.sort(key=lambda edge: edge[2], reverse=True)
-  return result
+from .utils import convert_to_set_of_edges
 
 def make_disjoint_set(nodes):
   result = {}
@@ -27,6 +19,7 @@ def union(disjoint_set, representative1, representative2):
 def kruskal_MST(nodes):
   disjoint_set = make_disjoint_set(nodes)
   edges = convert_to_set_of_edges(nodes)
+  edges.sort(key=lambda edge: edge[2], reverse=True)
   result = []
 
   while len(edges):

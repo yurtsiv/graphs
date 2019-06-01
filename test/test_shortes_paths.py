@@ -50,3 +50,18 @@ class TestShortestPaths(unittest.TestCase):
       1,
       ShortestPathAlgs.Dijkstra
     )
+
+  def test_bellman_ford_shortest_path(self):
+    shortest_paths = self.directed_graph.get_shortest_paths(
+      1,
+      ShortestPathAlgs.BellmanFord
+    )
+
+    self.assertEqual(shortest_paths, {
+      1: 0,
+      2: 45,
+      3: 45,
+      4: 10,
+      5: 25,
+      6: math.inf,
+    })
