@@ -1,6 +1,7 @@
-from .constants import MinSpanningTreeAlgs, ShortestPathAlgs
+from .constants import MinSpanningTreeAlgs, ShortestPathAlgs, CycleDetectionAlgs
 from .min_spanning_tree import kruskal_MST, prim_MST
 from .shortest_path import dijkstra_shortest_path, bellman_ford_shortes_path
+from .cycles_detection import detect_cycles_kosaraju, detect_cycles_tarjan
 
 class Graph:
   def __init__(self, weighted = False, directed = False):
@@ -113,6 +114,12 @@ class Graph:
       return dijkstra_shortest_path(self.nodes, origin)
 
     return bellman_ford_shortes_path(self.nodes, origin)
+  
+  def detect_cycles(self, algorithm=CycleDetectionAlgs.Kosaraju):
+    if algorithm == CycleDetectionAlgs.Kosaraju:
+      return detect_cycles_kosaraju(self)
+    
+    return detect_cycles_tarjan(self)
 
   def print(self):
     print("Directed: " + self.directed)

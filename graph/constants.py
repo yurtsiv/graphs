@@ -7,3 +7,7 @@ class MinSpanningTreeAlgs(Enum):
 class ShortestPathAlgs(Enum):
   Dijkstra='Dijkstra'
   BellmanFord='BellmanFord'
+
+class CycleDetectionAlgs(Enum):
+  Kosaraju='Kosaraju'
+  Tarjan='Tarjan'
