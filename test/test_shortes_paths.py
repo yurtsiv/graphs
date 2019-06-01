@@ -41,3 +41,12 @@ class TestShortestPaths(unittest.TestCase):
       5: 25,
       6: math.inf,
     })
+
+    # algorithm doesnt work with negative weights
+    self.directed_graph.add_edge(1, 5, -1)
+    self.assertRaises(
+      Exception,
+      self.directed_graph.get_shortest_paths,
+      1,
+      ShortestPathAlgs.Dijkstra
+    )

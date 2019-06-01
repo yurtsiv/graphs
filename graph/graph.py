@@ -110,9 +110,6 @@ class Graph:
       raise Exception("Origin node you specified is not in the graph")
 
     if algorithm == ShortestPathAlgs.Dijkstra:
-      if any(node < 0 for node in self.nodes):
-        raise Exception("Dijsktra's alogrithm doesn't work for graphs with negative weights")
-
       return dijkstra_shortest_path(self.nodes, origin)
 
     return bellman_ford_shortes_path(self.nodes, origin)
