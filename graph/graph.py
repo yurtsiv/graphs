@@ -109,7 +109,7 @@ class Graph:
     if not origin in self.nodes:
       raise Exception("Origin node you specified is not in the graph")
 
-    if algorithm == ShortestPathAlgs:
+    if algorithm == ShortestPathAlgs.Dijkstra:
       if any(node < 0 for node in self.nodes):
         raise Exception("Dijsktra's alogrithm doesn't work for graphs with negative weights")
 

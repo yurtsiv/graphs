@@ -34,6 +34,7 @@ class TestShortestPaths(unittest.TestCase):
     )
 
     self.assertEqual(shortest_paths, {
+      1: 0,
       2: 45,
       3: 45,
       4: 10,
