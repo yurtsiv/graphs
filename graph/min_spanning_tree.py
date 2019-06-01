@@ -1,3 +1,5 @@
+from queue import PriorityQueue
+
 def convert_to_set_of_edges(nodes):
   result = []
   for node in nodes:
@@ -22,7 +24,7 @@ def find_set(disjoint_set, elem):
 def union(disjoint_set, representative1, representative2):
   disjoint_set[representative1] = representative2
 
-def kruskal_algorithm(nodes):
+def kruskal_MST(nodes):
   disjoint_set = make_disjoint_set(nodes)
   edges = convert_to_set_of_edges(nodes)
   result = []
@@ -38,5 +40,29 @@ def kruskal_algorithm(nodes):
 
   return result
 
-def prim_algorithm(node):
-  pass
+def prim_MST(nodes):
+  result = []
+  active_nodes = []
+  active_vertices = PriorityQueue()
+
+  current_node = list(nodes.keys())[0]
+  active_nodes.append(current_node)
+  while len(result) != len(nodes) - 1:
+    current_node_edges = nodes[current_node]
+    for edge in current_node_edges:
+      adjacent_node, weight = edge
+      active_vertices.put(
+        (weight, (current_node, adjacent_node, weight))
+      )
+
+    min_edge = None
+    while not min_edge:
+      _, posible_min_edge = active_vertices.get()
+      if not posible_min_edge[1] in active_nodes:
+        min_edge = posible_min_edge
+
+    result.append(min_edge)
+    active_nodes.append(min_edge[1])
+    current_node = min_edge[1]
+  
+  return result
