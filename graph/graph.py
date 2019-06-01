@@ -1,5 +1,6 @@
-from .constants import MinSpanningTreeAlgs
+from .constants import MinSpanningTreeAlgs, ShortestPathAlgs
 from .min_spanning_tree import kruskal_MST, prim_MST
+from .shortest_path import dijkstra_shortest_path, bellman_ford_shortes_path
 
 class Graph:
   def __init__(self, weighted = False, directed = False):
@@ -101,8 +102,20 @@ class Graph:
       raise Exception("Can't get minimum spanning tree for directed graph.")
     if algorithm == MinSpanningTreeAlgs.Kruskal:
       return kruskal_MST(self.nodes)
-    else:
-      return prim_MST(self.nodes)
+
+    return prim_MST(self.nodes)
+
+  def get_shortest_paths(self, origin, algorithm=ShortestPathAlgs.BellmanFord):
+    if not origin in self.nodes:
+      raise Exception("Origin node you specified is not in the graph")
+
+    if algorithm == ShortestPathAlgs:
+      if any(node < 0 for node in self.nodes):
+        raise Exception("Dijsktra's alogrithm doesn't work for graphs with negative weights")
+
+      return dijkstra_shortest_path(self.nodes, origin)
+
+    return bellman_ford_shortes_path(self.nodes, origin)
 
   def print(self):
     print("Directed: " + self.directed)
