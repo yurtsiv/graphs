@@ -22,7 +22,7 @@ class TestMinSpanningTree(unittest.TestCase):
 
   def test_kruskal_algorithm(self):
     graph = Graph(directed=True)
-    self.assertRaises(Exception, Graph.get_min_spanning_tree, MinSpanningTreeAlgs.Kruskal)
+    self.assertRaises(Exception, graph.get_min_spanning_tree, MinSpanningTreeAlgs.Kruskal)
 
     spanning_tree = self.graph.get_min_spanning_tree(MinSpanningTreeAlgs.Kruskal)
     self.assertEqual(spanning_tree, [

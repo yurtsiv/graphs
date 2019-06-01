@@ -21,5 +21,5 @@ class TestCyclesDetection(unittest.TestCase):
 
   def test_kosaraju_algorithm(self):
     self.assertFalse(self.graph.detect_cycles(CycleDetectionAlgs.Kosaraju))
-    self.graph.add_edge(5, 2)
+    self.graph.add_edge(5, 3)
     self.assertTrue(self.graph.detect_cycles(CycleDetectionAlgs.Kosaraju))
