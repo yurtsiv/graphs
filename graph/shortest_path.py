@@ -9,7 +9,7 @@ def get_min_weight_node(weights, nodes):
       min_weight_node = (node, weights[node])
   return min_weight_node
 
-def dijkstra_shortest_path(nodes, origin):
+def SSSP_Dijkstra(nodes, origin):
   weights = {}
   for node in nodes:
     weights[node] = math.inf
@@ -18,7 +18,7 @@ def dijkstra_shortest_path(nodes, origin):
   weights[origin] = 0
   for origin_edge in nodes[origin]:
     weights[origin_edge[0]] = origin_edge[1]
-  
+ 
   unvisited_nodes = list(filter(lambda node: node != origin, nodes))
   
   while len(unvisited_nodes) != 0:
@@ -46,7 +46,7 @@ def relax_nodes(edges, weights):
 
   return relaxed
 
-def bellman_ford_shortes_path(nodes, origin):
+def SSSP_Bellman_Ford(nodes, origin):
   weights = {}
   for node in nodes:
     if node == origin:

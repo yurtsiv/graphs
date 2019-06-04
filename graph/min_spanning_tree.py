@@ -16,7 +16,7 @@ def find_set(disjoint_set, elem):
 def union(disjoint_set, representative1, representative2):
   disjoint_set[representative1] = representative2
 
-def kruskal_MST(nodes):
+def MST_Kruskal(nodes):
   disjoint_set = make_disjoint_set(nodes)
   edges = convert_to_set_of_edges(nodes)
   edges.sort(key=lambda edge: edge[2], reverse=True)
@@ -33,7 +33,7 @@ def kruskal_MST(nodes):
 
   return result
 
-def prim_MST(nodes):
+def MST_Prim(nodes):
   result = []
   active_nodes = []
   active_vertices = PriorityQueue()

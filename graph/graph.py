@@ -1,6 +1,6 @@
 from .constants import MinSpanningTreeAlgs, ShortestPathAlgs, CycleDetectionAlgs
-from .min_spanning_tree import kruskal_MST, prim_MST
-from .shortest_path import dijkstra_shortest_path, bellman_ford_shortes_path
+from .min_spanning_tree import MST_Kruskal, MST_Prim
+from .shortest_path import SSSP_Dijkstra, SSSP_Bellman_Ford
 from .cycles_detection import detect_cycles_kosaraju, detect_cycles_tarjan
 
 class Graph:
@@ -62,7 +62,8 @@ class Graph:
   
   def update_weight(self, key1, key2, new_weight):
     if not self.weighted:
-      raise Exception("Graph is not weighted")
+      raise Exception("Can't update weight in an unweighted graph")
+
     self.check_node_exists(key1)
     self.check_node_exists(key2)
     
@@ -100,22 +101,26 @@ class Graph:
   
   def get_min_spanning_tree(self, algorithm=MinSpanningTreeAlgs.Kruskal):
     if self.directed:
-      raise Exception("Can't get minimum spanning tree for directed graph.")
-    if algorithm == MinSpanningTreeAlgs.Kruskal:
-      return kruskal_MST(self.nodes)
+      raise Exception("Can't get minimum spanning tree for directed graph")
 
-    return prim_MST(self.nodes)
+    if algorithm == MinSpanningTreeAlgs.Kruskal:
+      return MST_Kruskal(self.nodes)
+
+    return MST_Prim(self.nodes)
 
   def get_shortest_paths(self, origin, algorithm=ShortestPathAlgs.BellmanFord):
     if not origin in self.nodes:
       raise Exception("Origin node you specified is not in the graph")
 
     if algorithm == ShortestPathAlgs.Dijkstra:
-      return dijkstra_shortest_path(self.nodes, origin)
+      return SSSP_Dijkstra(self.nodes, origin)
 
-    return bellman_ford_shortes_path(self.nodes, origin)
+    return SSSP_Bellman_Ford(self.nodes, origin)
   
   def detect_cycles(self, algorithm=CycleDetectionAlgs.Kosaraju):
+    if not self.directed:
+      raise Exception("Cycle detection works only for directed graphs");
+
     if algorithm == CycleDetectionAlgs.Kosaraju:
       return detect_cycles_kosaraju(self)
     
