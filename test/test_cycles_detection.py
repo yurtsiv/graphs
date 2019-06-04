@@ -1,6 +1,6 @@
 import unittest
-from graph.graph import Graph
 from graph.constants import CycleDetectionAlgs
+from graph.graph import Graph
 
 class TestCyclesDetection(unittest.TestCase):
   def setUp(self):
@@ -13,7 +13,7 @@ class TestCyclesDetection(unittest.TestCase):
     graph.add_node(5)
 
     graph.add_edge(1, 2)
-    graph.add_edge(1, 3)
+    graph.add_edge(3, 1)
     graph.add_edge(2, 4)
     graph.add_edge(4, 5)
 
@@ -23,3 +23,4 @@ class TestCyclesDetection(unittest.TestCase):
     self.assertFalse(self.graph.detect_cycles(CycleDetectionAlgs.Kosaraju))
     self.graph.add_edge(5, 3)
     self.assertTrue(self.graph.detect_cycles(CycleDetectionAlgs.Kosaraju))
+
