@@ -24,3 +24,7 @@ class TestCyclesDetection(unittest.TestCase):
     self.graph.add_edge(5, 3)
     self.assertTrue(self.graph.detect_cycles(CycleDetectionAlgs.Kosaraju))
 
+  def test_kosaraju_tarjan(self):
+    self.assertFalse(self.graph.detect_cycles(CycleDetectionAlgs.Tarjan))
+    self.graph.add_edge(5, 3)
+    self.assertTrue(self.graph.detect_cycles(CycleDetectionAlgs.Tarjan))
