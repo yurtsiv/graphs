@@ -26,7 +26,7 @@ class TestMinSpanningTree(unittest.TestCase):
 
     spanning_tree = self.graph.get_min_spanning_tree(MinSpanningTreeAlgs.Kruskal)
     self.assertEqual(spanning_tree, [
-      (3, 1, 0), (5, 4, 1), (4, 3, 2), (5, 2, 4)
+        (3, 1, 0), (5, 4, 1), (4, 3, 2), (5, 2, 4)
     ])
 
   def test_prim_algorithm(self):
